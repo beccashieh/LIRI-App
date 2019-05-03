@@ -15,6 +15,8 @@ From the command line, type node liri.js followed by one of the following comman
 * After the movie command, type the name of a movie using " ", and the app will return data on that movie.
 * The last command above uses fs to read text entered on the random.txt file and will return spotify data for "I Want it That Way".
 
+![recording](https://user-images.githubusercontent.com/47259793/57162211-8e95ba80-6dbb-11e9-8765-2deac2561714.PNG)
+
 ### Prerequisites
 
 If you would like to run this program on your own machine, you will need to supply your own .env file containing your spotify ID and secret key. 
