@@ -17,30 +17,37 @@ var search = process.argv[3];
 var movieURL = `http://www.omdbapi.com/?t=${search}&apikey=eb603be6`
 
 // When no song title provided, defaults to specific song, The Sign.
-function lookupSpecificSong() {
+// function lookupSpecificSong() {
 
-	// Calls Spotify API to retrieve a specific track, The Sign, Ace of Base.
-	spotify.search({type: 'track', id: '3DYVWvPh3kGwPasp7yjahc'}, function(err, response) {
-		if (err) {
-			logOutput.error(err);
-			return
-		}
+// 	// Calls Spotify API to retrieve a specific track, The Sign, Ace of Base.
+// 	spotify.search({type: 'track', id: '3DYVWvPh3kGwPasp7yjahc'}, function(err, response) {
+// 		if (err) {
+// 			logOutput.error(err);
+// 			return
+// 		}
 
-		// Prints the artist, track name, preview url, and album name.
-    console.log(
-      `Preview URL: ${response.tracks.items[0].external_urls.spotify}`
-    );
-    console.log(`Artist: ${response.tracks.items[0].artists[0].name}`);
-    console.log(`Song Title: ${response.tracks.items[0].name}`);
-    console.log(`Album Name: ${response.tracks.items[0].album.name}`);
-	});
+// 		// Prints the artist, track name, preview url, and album name.
+//     console.log(
+//       `Preview URL: ${response.tracks.items[0].external_urls.spotify}`
+//     );
+//     console.log(`Artist: ${response.tracks.items[0].artists[0].name}`);
+//     console.log(`Song Title: ${response.tracks.items[0].name}`);
+//     console.log(`Album Name: ${response.tracks.items[0].album.name}`);
+// 	});
+// }
+
+//Function to record entries
+function recordEntries (){
+  fs.appendFile("log.txt", `You entered "${argument} ${search}"\n`, function(
+    err
+  ) {
+    if (err) throw err;
+  });
 }
-//Spotify API call
 
+
+//Spotify API call
 function music() {
-  if (search === ""){
-    lookupSpecificSong();
-  } else {
   spotify
     .search({ type: "track", query: search })
     .then(function(response) {
@@ -54,13 +61,13 @@ function music() {
     .catch(function(err) {
       console.log(err);
     });
-  fs.appendFile("log.txt", `You entered "${argument} ${search}"\n`, function(
-    err
-  ) {
-    if (err) throw err;
-  });
+  // fs.appendFile("log.txt", `You entered "${argument} ${search}"\n`, function(
+  //   err
+  // ) {
+  //   if (err) throw err;
+  // });
 }
-}
+
 
 //***How to handle if no song entered?***/
 // if (search == null){
@@ -75,22 +82,20 @@ function bands() {
       `https://rest.bandsintown.com/artists/${search}/events?app_id=codingbootcamp`
     )
     .then(function(response) {
-      var date = response.data[1].datetime;
-      moment(date).format("MM/DD/YYYY");
-      console.log(JSON.stringify(response.data, null, 2));
-      // console.log(`Artist: ${response.data[1].lineup}`);
-      // console.log(`Venue Name: ${response.data[1].venue.name}`);
-      // console.log(`Location: ${response.data[1].venue.city}, ${response.data[1].venue.country}`);
-      // console.log(`Date: ${date}`);
+      for (i = 0; i < response.data.length; i++){
+        var date = response.data[i].datetime;
+        date = moment(date).format("MM/DD/YYYY");
+        // console.log(JSON.stringify(response.data, null, 2));
+        console.log(`Artist: ${response.data[i].lineup}`);
+        console.log(`Venue Name: ${response.data[i].venue.name}`);
+        console.log(`Location: ${response.data[i].venue.city}, ${response.data[i].venue.country}`);
+        console.log(`Date: ${date}`);
+        console.log(`---------------------`);
+      }
     })
     .catch(function(err) {
       console.log(err);
     });
-  fs.appendFile("log.txt", `You entered "${argument} ${search}"\n`, function(
-    err
-  ) {
-    if (err) throw err;
-  });
 }
 
 //OMDB API
@@ -99,7 +104,7 @@ function omdb() {
   axios
     .get(`http://www.omdbapi.com/?t=Mr+Nobody&apikey=eb603be6`)
     .then(function(response) {
-      console.log(JSON.stringify(response.data, null, 2));
+      // console.log(JSON.stringify(response.data, null, 2));
       // console.log(`Movie Title: ${response.Title}`);
       // console.log(`Release Year: ${response.data.Year}`);
       // console.log(`IMDB Rating: ${response.data.Ratings[0].Value}`);
@@ -112,31 +117,29 @@ function omdb() {
     .catch(function(err) {
       console.log(err);
     });
-//   } else {
-//     axios
-//     .get(movieURL)
-//     .then(function(response) {
-//       // console.log(JSON.stringify(response.data, null, 2));
-//       console.log(`Movie Title: ${response.data.Title}`);
-//       console.log(`Release Year: ${response.data.Year}`);
-//       console.log(`IMDB Rating: ${response.data.Ratings[0].Value}`);
-//       console.log(`Rotten Tomatoes Rating: ${response.data.Ratings[1].Value}`);
-//       console.log(`Production Country: ${response.data.Country}`);
-//       console.log(`Movie Language: ${response.data.Language}`);
-//       console.log(`Movie Plot: ${response.data.Plot}`);
-//       console.log(`Actors: ${response.data.Actors}`);
-//     })
-//     .catch(function(err) {
-//       console.log(err);
-//     });
-//   fs.appendFile("log.txt", `You entered "${argument} ${search}"\n`, function(
-//     err
-//   ) {
-//     if (err) throw err;
-//   });
-// }
   }
-  
+  axios
+    .get(movieURL)
+    .then(function(response) {
+      // console.log(JSON.stringify(response.data, null, 2));
+      console.log(`Movie Title: ${response.data.Title}`);
+      console.log(`Release Year: ${response.data.Year}`);
+      console.log(`IMDB Rating: ${response.data.Ratings[0].Value}`);
+      console.log(`Rotten Tomatoes Rating: ${response.data.Ratings[1].Value}`);
+      console.log(`Production Country: ${response.data.Country}`);
+      console.log(`Movie Language: ${response.data.Language}`);
+      console.log(`Movie Plot: ${response.data.Plot}`);
+      console.log(`Actors: ${response.data.Actors}`);
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
+  // fs.appendFile("log.txt", `You entered "${argument} ${search}"\n`, function(
+  //   err
+  // ) {
+  //   if (err) throw err;
+  // });
+}
 
 //do-what-it-says command
 // Uses fs node package to take the text inside random.txt,
@@ -162,24 +165,27 @@ function doWhatItSays() {
 		}
 	});
 }
-    fs.appendFile("log.txt", `You entered "${argument} ${search}"\n`, function(
-      err
-    ) {
-      if (err) throw err;
-    });
+    // fs.appendFile("log.txt", `You entered "${argument} ${search}"\n`, function(
+    //   err
+    // ) {
+    //   if (err) throw err;
+    // });
 
 
 //Command arguments
 if (argument === "movie-this") {
   omdb();
+  recordEntries();
 };
 if (argument === "concert-this") {
   bands();
+  recordEntries();
 };
 if (argument === "spotify-this-song") {
   music();
+  recordEntries();
 };
 if (argument === "do-what-it-says") {
   doWhatItSays();
+  recordEntries();
 };
-}
