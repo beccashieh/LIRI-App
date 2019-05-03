@@ -5,10 +5,10 @@ LIRI is a language recognition app that operates from the command line. It takes
 ## Getting Started
 
 From the command line, type node liri.js followed by one of the following commands:
-* _spotify-this-song_
-* _concert-this_
-* _movie-this_
-* _do-what-it-says_
+* _**spotify-this-song**_
+* _**concert-this**_
+* _**movie-this**_
+* _**do-what-it-says**_
 
 * After the spotify command, type the name of a song using " ", and the app will return data on the selected song. 
 * After the concert command, type the name of an artist using " ", and the app will return data on concert dates for that artist.
@@ -21,5 +21,6 @@ If you would like to run this program on your own machine, you will need to supp
 
 
 ## Authors
+---
 
 **Rebecca Shieh** 
