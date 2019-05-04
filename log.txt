@@ -1,14 +1,4 @@
 
 
-You entered "spotify-this-song my pony"
-You entered "concert-this pink"
-You entered "movie-this jumanji"
-You entered "do-what-it-says undefined"
-You entered "spotify-this-song i want it that way"
-You entered "spotify-this-song undefined"
-You entered "spotify-this-song undefined"
-You entered "spotify-this-song undefined"
-You entered "movie-this undefined"
-You entered "movie-this undefined"
-You entered "movie-this undefined"
+
 You entered "movie-this undefined"
